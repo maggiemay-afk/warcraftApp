@@ -1,6 +1,8 @@
 import express, { Application, Request, Response } from 'express';
 import axios, {isCancel, AxiosError} from 'axios';
+import mounts from './mounts.json';
 require('dotenv').config();
+
 
 const app: Application = express();
 const port: number = 3001;
