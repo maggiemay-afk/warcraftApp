@@ -7,11 +7,13 @@ require('dotenv').config();
 const app: Application = express();
 const port: number = 3001;
 let token: string;
+let creatureID: number;
+let mountImage: string;
 
 const getToken = async (): Promise<string> => { //async function that returns a Promise of type string
     console.log("token is falsey");
 
-    const response = await axios.post("https://oauth.battle.net/token", new URLSearchParams({
+    const authResponse = await axios.post("https://oauth.battle.net/token", new URLSearchParams({
         'grant_type': 'client_credentials'
     }), 
     {
@@ -25,10 +27,10 @@ const getToken = async (): Promise<string> => { //async function that returns a 
         throw error;
     }); 
     
-    console.log(response); //api POST response
+    //console.log(authResponse); //api POST response
 
-    token = response.data.access_token;
-    console.log(token) //check variable is set
+    token = authResponse.data.access_token;
+    //console.log(token) //check variable is set
 
     return token;
 
@@ -47,9 +49,13 @@ app.get('/new-mount', async (req: Request, res: Response) => {
 
     console.log("token is truthy");
 
-    const response = await axios.get('https://us.api.blizzard.com/data/wow/token/', {
+    //Get mount details by mount id
+    //Should return creature id
+    const mountDetailResponse = await axios.get('https://us.api.blizzard.com/data/wow/mount/' + 6, {
         params: {
-            'namespace': 'dynamic-us'
+            'namespace': 'static-us',
+            ':region': 'us',
+            'locale': 'en_US'
         },
         headers: {
             'Authorization': 'Bearer ' + token
@@ -59,7 +65,36 @@ app.get('/new-mount', async (req: Request, res: Response) => {
         throw error;
     });
 
-    console.log(response); //api GET response
+    //console.log(mountDetailResponse);
+
+    creatureID = mountDetailResponse.data.creature_displays[0].id
+
+    console.log("Creature ID is");
+    console.log(creatureID);
+
+
+    //Get creature display by creature id
+    const creatureResponse = await axios.get('https://us.api.blizzard.com/data/wow/media/creature-display/' + creatureID, {
+        params: {
+            'namespace': 'static-us',
+            ':region': 'us',
+            'locale': 'en_US'
+        },
+        headers: {
+            'Authorization': 'Bearer ' + token
+        }
+    }).catch(function (error) {
+        console.log(error);
+        throw error;
+    });
+
+    //console.log(creatureResponse);
+
+    mountImage = creatureResponse.data.assets[0].value
+    console.log(mountImage);
+
+    res.send(mountImage);
+
 
 })
 
