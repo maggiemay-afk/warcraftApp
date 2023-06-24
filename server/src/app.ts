@@ -9,6 +9,15 @@ const port: number = 3001;
 let token: string;
 let creatureID: number;
 let mountImage: string;
+const totalMounts: number = mounts.mounts.length;
+
+
+function getRandomMountId(): number {
+    let index = Math.floor(Math.random() * totalMounts);
+    console.log(mounts.mounts[index].id);
+    return mounts.mounts[index].id;
+}
+
 
 const getToken = async (): Promise<string> => { //async function that returns a Promise of type string
     console.log("token is falsey");
@@ -37,7 +46,8 @@ const getToken = async (): Promise<string> => { //async function that returns a 
 }
 
 app.get('/', (req: Request, res: Response) => {
-    res.send('welcome home');
+    res.send("Total Mounts: " + totalMounts);
+    //res.send('welcome home');
 })
 
 app.get('/new-mount', async (req: Request, res: Response) => {
@@ -51,7 +61,7 @@ app.get('/new-mount', async (req: Request, res: Response) => {
 
     //Get mount details by mount id
     //Should return creature id
-    const mountDetailResponse = await axios.get('https://us.api.blizzard.com/data/wow/mount/' + 6, {
+    const mountDetailResponse = await axios.get('https://us.api.blizzard.com/data/wow/mount/' + getRandomMountId(), {
         params: {
             'namespace': 'static-us',
             ':region': 'us',
@@ -94,7 +104,6 @@ app.get('/new-mount', async (req: Request, res: Response) => {
     console.log(mountImage);
 
     res.send(mountImage);
-
 
 })
 
