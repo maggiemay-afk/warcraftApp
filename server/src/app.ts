@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import axios, {isCancel, AxiosError} from 'axios';
 import mounts from './mounts.json';
+import cors from 'cors';
 require('dotenv').config();
 
 
@@ -9,8 +10,10 @@ const port: number = 3001;
 let token: string;
 let creatureID: number;
 let mountImage: string;
+let mountName: string;
 const totalMounts: number = mounts.mounts.length;
 
+app.use(cors());
 
 function getRandomMountId(): number {
     let index = Math.floor(Math.random() * totalMounts);
@@ -77,12 +80,13 @@ app.get('/new-mount', async (req: Request, res: Response) => {
 
     //console.log(mountDetailResponse);
 
+    mountName = mountDetailResponse.data.name;
     creatureID = mountDetailResponse.data.creature_displays[0].id
 
     console.log("Creature ID is");
     console.log(creatureID);
 
-
+    // TODO: Update request URL to use mount response provided URL   
     //Get creature display by creature id
     const creatureResponse = await axios.get('https://us.api.blizzard.com/data/wow/media/creature-display/' + creatureID, {
         params: {
@@ -99,11 +103,15 @@ app.get('/new-mount', async (req: Request, res: Response) => {
     });
 
     //console.log(creatureResponse);
-
     mountImage = creatureResponse.data.assets[0].value
     console.log(mountImage);
 
-    res.send(mountImage);
+    const response: Object = {
+        'image': mountImage,
+        'name': mountName
+    }
+
+    res.send(response);
 
 })
 

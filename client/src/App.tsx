@@ -1,26 +1,30 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import MountImage from './MountImage';
+import { TextField, Button } from '@mui/material';
+import Header from './Header';
 
 function App() {
+  const [gameStarted, setGameStarted] = useState<Boolean>(false);
+
+  function startGame() {
+    setGameStarted(true);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <MountImage></MountImage>
-      </header>
+      
+      <Header></Header>
+      <div>
+        { gameStarted == false 
+          ? <div>
+              <p>This is a WoW mount guessing game.<br></br>Click the button to get started</p>
+              <Button variant="contained" size="large" onClick={startGame}>START</Button>
+            </div>
+          : <MountImage/>
+        }
+      </div>
     </div>
   );
 }
