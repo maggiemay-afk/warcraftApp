@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import axios, {isCancel, AxiosError} from 'axios';
 import mounts from './mounts.json';
+import multipleChoices from './multipleChoices.json';
 import cors from 'cors';
 require('dotenv').config();
 
@@ -49,8 +50,7 @@ const getToken = async (): Promise<string> => { //async function that returns a 
 }
 
 app.get('/', (req: Request, res: Response) => {
-    res.send("Total Mounts: " + totalMounts);
-    //res.send('welcome home');
+    res.send("Home page - Total Mounts: " + totalMounts);
 })
 
 app.get('/new-mount', async (req: Request, res: Response) => {
@@ -87,7 +87,7 @@ app.get('/new-mount', async (req: Request, res: Response) => {
     console.log(creatureID);
 
     // TODO: Update request URL to use mount response provided URL   
-    //Get creature display by creature id
+    // Get creature display by creature id
     const creatureResponse = await axios.get('https://us.api.blizzard.com/data/wow/media/creature-display/' + creatureID, {
         params: {
             'namespace': 'static-us',
