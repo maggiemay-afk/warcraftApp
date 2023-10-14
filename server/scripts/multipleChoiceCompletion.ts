@@ -1,11 +1,7 @@
 import mounts from '../src/mounts.json';
-//const { mounts } = require('../src/mounts.json');
-//import multipleChoices from '../src/multipleChoices.json';
-//const { multipleChoices } = require('../server/src/multipleChoices.json');
-//import { Configuration, OpenAIApi } from "openai";
-//const { Configuration, OpenAIApi } = require('../server/package.json/openai');
+require('dotenv').config();
 
-const apiKey = "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";
+const apiKey = process.env.OPENAI_API_KEY;
 
 // TODO: Update to use length of mounts json array
 for (let i = 0; i < 3; i++) {
