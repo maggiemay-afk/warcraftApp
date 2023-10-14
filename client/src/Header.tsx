@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 export default function Header() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-        <img src='../public/halfhill.PNG'></img>
+        <img src='./halfhill.png'></img>
         <AppBar position="static">
             <Toolbar>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
