@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "dev": "nodemon src/app.ts"
+    "dev": "nodemon src/app.ts",
+    "generateMountChoices": "ts-node ./scripts/multipleChoiceCompletion.ts"
   },
   "dependencies": {
     "axios": "^1.4.0",
@@ -16,6 +17,5 @@
     "nodemon": "^2.0.22",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
-  },
-    "type": "module"
+  }
 }
