@@ -1,7 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import axios, {isCancel, AxiosError} from 'axios';
-import mounts from './mounts.json';
-import multipleChoices from './multipleChoices.json';
+//import mounts from './mounts.json';
+import mounts from './aiGeneratedNames.json';
 import cors from 'cors';
 require('dotenv').config();
 
