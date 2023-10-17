@@ -5,7 +5,6 @@ import mounts from './aiGeneratedNames.json';
 import cors from 'cors';
 require('dotenv').config();
 
-
 const app: Application = express();
 const port: number = 3001;
 let token: string;
@@ -13,9 +12,18 @@ const totalMounts: number = mounts.mounts.length;
 
 app.use(cors());
 
-function getRandomMountId(): number {
-    let index = Math.floor(Math.random() * totalMounts);
-    return mounts.mounts[index].id;
+function getRandomMountIndex(): number {
+    return Math.floor(Math.random() * totalMounts);
+}
+
+function getMountNames(index: number): string[] {
+    let names: string[] = [];
+
+    names.push(mounts.mounts[index].realName);
+    names = names.concat(mounts.mounts[index].fakeNames);
+    names = names.sort(() => Math.random() - 0.5);
+    return names;
+
 }
 
 class BlizzardAPIError extends Error {
@@ -70,7 +78,10 @@ app.get('/new-mount', async (req: Request, res: Response) => {
 
     //Get mount details by mount id
     //Should return creature id
-    const mountDetailResponse = await axios.get('https://us.api.blizzard.com/data/wow/mount/' + getRandomMountId(), {
+    let mountIndex = getRandomMountIndex();
+    const mountId = mounts.mounts[mountIndex].id;
+
+    const mountDetailResponse = await axios.get('https://us.api.blizzard.com/data/wow/mount/' + mountId, {
         params: {
             'namespace': 'static-us',
             ':region': 'us',
@@ -89,11 +100,6 @@ app.get('/new-mount', async (req: Request, res: Response) => {
         console.log(error);
         throw error;
     });
-
-    const mountName = mountDetailResponse.data.name;
-    if (!mountName) {
-        throw new BlizzardAPIError("Mount name missing", mountDetailResponse.status, mountDetailResponse.data);
-    } 
 
     if (mountDetailResponse.data.creature_displays.length === 0) {
         throw new BlizzardAPIError("missing creature display", mountDetailResponse.status, mountDetailResponse.data);
@@ -126,11 +132,11 @@ app.get('/new-mount', async (req: Request, res: Response) => {
     }
     
     const mountImage = creatureResponse.data.assets[0].value
-
+    let names = getMountNames(mountIndex);
+    
     const response: Object = {
         'image': mountImage,
-        'name': mountName,
-        'falseNames': [] //TO DO: add false names
+        'names': names
     }
 
     console.log(response)
