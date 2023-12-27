@@ -5933,11 +5933,9 @@
     {
       "realName": "Shu-Zen, the Divine Sentinel",
       "fakeNames": [
-        "Alani",
-        "the Serene Guardian",
+        "Alani, the Serene Guardian",
         "Quilen of the Celestial Watch",
-        "Xuen",
-        "the Golden Protector"
+        "Xuen, the Golden Protector"
       ],
       "id": 1011
     },
@@ -7078,10 +7076,9 @@
     {
       "realName": "Squeakers, the Trickster",
       "fakeNames": [
-        "Whiskers",
-        "the Jester; Poppers",
-        "the Prankster; Chuckles",
-        "the Mischief-maker"
+        "Whiskers, the Jester",
+        "Poppers, the Prankster",
+        "Chuckles, the Mischief-maker"
       ],
       "id": 1290
     },

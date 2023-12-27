@@ -16,15 +16,19 @@ function getRandomMountIndex(): number {
     return Math.floor(Math.random() * totalMounts);
 }
 
-function getMountNames(index: number): string[] {
+function getAllMountNames(index: number): string[] {
     let names: string[] = [];
 
     names.push(mounts.mounts[index].realName);
     names = names.concat(mounts.mounts[index].fakeNames);
     names = names.sort(() => Math.random() - 0.5);
     return names;
-
 }
+
+function getTrueMountName(index: number): string {
+    return mounts.mounts[index].realName;
+}
+
 
 class BlizzardAPIError extends Error {
     status: number;
@@ -132,11 +136,13 @@ app.get('/new-mount', async (req: Request, res: Response) => {
     }
     
     const mountImage = creatureResponse.data.assets[0].value
-    let names = getMountNames(mountIndex);
+    let names = getAllMountNames(mountIndex);
+    let answer = getTrueMountName(mountIndex);
     
     const response: Object = {
         'image': mountImage,
-        'names': names
+        'names': names,
+        'answer': answer
     }
 
     console.log(response)

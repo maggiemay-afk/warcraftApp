@@ -13,8 +13,8 @@ export default function Header() {
         <img src='./halfhill.png'></img>
         <AppBar position="static">
             <Toolbar>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    Mount Guesser
+                <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+                    WoW Mount Guesser
                 </Typography>
                 <Button color="inherit">About</Button>
             </Toolbar>
