@@ -4,6 +4,7 @@ import './App.css';
 import MountImage from './MountImage';
 import { TextField, Button } from '@mui/material';
 import Header from './Header';
+import Footer from './Footer';
 
 function App() {
   const [gameStarted, setGameStarted] = useState<Boolean>(false);
@@ -25,6 +26,7 @@ function App() {
           : <MountImage/>
         }
       </div>
+      <Footer></Footer>
     </div>
   );
 }
