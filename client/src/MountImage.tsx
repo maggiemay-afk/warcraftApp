@@ -1,17 +1,18 @@
-import { error } from 'console';
 import React, { Component, useState, useEffect, useCallback } from 'react';
-import {TextField, Button, ImageList} from '@mui/material/';
+import {Button} from '@mui/material/';
 import Stack from '@mui/material/Stack';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import LinearProgress from '@mui/material/LinearProgress';
 import Box from '@mui/material/Box'; 
 import './App.css';
+import { GameData } from './types';
 
 type MountImageProps = {
   updateScore: Function,
   updateRound: Function,
-  allGameData: Array<string>
+  updateGameData: Function,
+  gameData: GameData[]
 }
 
 type ImageResponse = {
@@ -20,12 +21,17 @@ type ImageResponse = {
   answer: string,
 }
 
-function updateAllGameData() {
+function checkGameData(allGameData: GameData[], data: ImageResponse): boolean{
+
+  //see if the current image is already in finalGameData
+
+  return false;
 
 }
 
+
 const MountImage = (props: MountImageProps) => {
-  const {updateScore, updateRound, allGameData} = props;
+  const {updateScore, updateRound, updateGameData, gameData} = props;
   const [image, setImage] = useState<ImageResponse|undefined>();
   const [choice, setChoice] = useState<string|undefined>();
   
@@ -35,12 +41,11 @@ const MountImage = (props: MountImageProps) => {
     .then((res) => res.json())
     .then((data) => {
 
-      setImage(data);
-
-    })
-    .then((data) => {
-
-      updateAllGameData();
+       //if (!checkGameData(gameData, data)) {
+       // setImage(data);
+       //} 
+       //call API again? 
+       setImage(data);
 
     })
     .catch((error) => {
@@ -63,6 +68,7 @@ const MountImage = (props: MountImageProps) => {
   const evaluate = (choice: string) => {
 
     setChoice(choice);
+    updateGameData(image.image, choice, image.answer);
 
     if (choice === image.answer) {
       updateScore();
@@ -73,7 +79,7 @@ const MountImage = (props: MountImageProps) => {
       setNewMount();
       setChoice(undefined);
       updateRound();
-     }, 10000)
+     }, 1000)
 
   }
 
@@ -106,7 +112,7 @@ const MountImage = (props: MountImageProps) => {
       <img className='mountImage' src={image.image}></img>
       
       <Stack direction="row" justifyContent="center" alignItems="center" spacing={2}>
-        {image.names.map((item) => <Button variant="outlined" onClick={() => evaluate(item)}> {item} </Button>)}
+        {image.names.map((item) => <Button disabled={!!choice} variant="outlined" onClick={() => evaluate(item)}> {item} </Button>)}
       </Stack>
 
     </div>

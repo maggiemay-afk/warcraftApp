@@ -3,15 +3,14 @@ import Header from './Header';
 import Footer from './Footer';
 import MountImage from './MountImage';
 import GameOver from './GameOver';
+import LandingPage from './LandingPage';
+import { GameData } from './types';
 import React, {useState} from 'react';
-import { TextField, Button } from '@mui/material';
-import Typography from '@mui/material/Typography';
-
 
 function App() {
   const [gameStarted, setGameStarted] = useState<Boolean>(false);
   const [gameOver, setGameOver] = useState<Boolean>(false);
-  const [finalGameData, setFinalGameData] = useState<Array<string>>([]);
+  const [finalGameData, setFinalGameData] = useState<GameData[]>([]);
   const [score, setScore] = useState<number>(0);
   const [rounds, setRounds] = useState<number>(1);
   
@@ -20,12 +19,20 @@ function App() {
     setGameStarted(true);
   }
 
+  function restartGame(){
+    setGameStarted(false);
+    setGameOver(false);
+    setFinalGameData([]);
+    setScore(0);
+    setRounds(1);
+  }
+
   function incrementScore() {
     setScore(score + 1);
   }
 
   function incrementRound() {
-    if (rounds === 5) {
+    if (rounds === 10) {
       setGameOver(true);
 
     } else {
@@ -33,12 +40,15 @@ function App() {
     }
   }
 
-  function addFinalGameData(){
+  function updateGameData(roundImage: string, roundChoice: string, roundAnswer: string){
+    let roundData: GameData = {
+      image: roundImage,
+      choice: roundChoice, 
+      answer: roundAnswer
+    }
 
-  }
-
-  function checkFinalGameData(){
-
+    finalGameData.push(roundData);
+    setFinalGameData(finalGameData);
   }
 
 
@@ -48,22 +58,27 @@ function App() {
       <div>
         {gameOver === true
         ? <div> 
-            <GameOver></GameOver>
-            <Footer score={score} round={rounds}></Footer>
+            <GameOver 
+              finalGameData={finalGameData}
+              score={score}
+              rounds={rounds}
+              restartGame={restartGame}
+            />
           </div>
         : gameStarted === false 
-          ? <div className="instructions">
-              <h3>
-                This is a trivia game for guessing mount names in World of Warcraft<br></br>
-                A picture will be provided from the Blizzard API followed by multiple choice options<br></br>
-                The false names have been generated using ChatGPT<br></br>
-                One game lasts 5 rounds, click the button to get started
-              </h3>
-              <Button variant="contained" size="large" onClick={startGame}>START</Button>
-            </div>
+          ? <LandingPage startGame={startGame}/>
           : <div> 
-              <MountImage updateRound={incrementRound} updateScore={incrementScore} allGameData={finalGameData}/>
-              <Footer score={score} round={rounds}></Footer>
+              <MountImage 
+                updateRound={incrementRound} 
+                updateScore={incrementScore} 
+                updateGameData={updateGameData} 
+                gameData={finalGameData}
+              />
+            <Footer 
+              score={score} 
+              round={rounds}
+              restartGame={restartGame}
+            />
             </div>
         }
       </div>

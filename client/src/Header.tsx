@@ -4,7 +4,6 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 
 
 export default function Header() {
@@ -13,12 +12,15 @@ export default function Header() {
         <img className="headerImage" src='./halfhill.png'></img>
         <AppBar position="static">
             <Toolbar>
-                <img className="logo" src="./alliance.png"></img>
-                <img className="logo" src="./horde.jpg"></img>
-                <Typography className="headerTitle" variant="h5" component="div" sx={{ flexGrow: 1 }}>
+                <Typography 
+                  className="headerTitle" 
+                  variant="h5" 
+                  component="div" 
+                  sx={{ flexGrow: 1 }}>
                     Mount Trivia
                 </Typography>
-                <Button color="inherit">About</Button>
+                <img className="logo" src="./alliance.png"></img>
+                <img className="logo" src="./horde.jpg"></img>                
             </Toolbar>
         </AppBar>
     </Box>

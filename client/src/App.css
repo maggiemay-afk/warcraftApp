@@ -21,7 +21,26 @@
 
 .headerTitle{
   text-align: left;
-  padding-left: 20px;
+}
+
+.landingPage{
+  text-align: center;
+}
+
+.landingPageBox{
+  padding: 25px;
+}
+
+.instructionP{
+  text-align: left;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.loadingBar{
+  margin-top: 25px;
 }
 
 .mountImage{
@@ -40,6 +59,16 @@
   padding: 10px;
 }
 
+.footer{
+  padding-top: 50px;
+  position: relative;
+  left: 0;
+  bottom: 0;
+  height: 100px;
+  width: 100%;
+  overflow: hidden;
+}
+
 .gameDataParent{
   text-align: center;
   padding-top: 50px;
@@ -48,24 +77,25 @@
 .gameData{
   display: inline;
   padding: 20px;
-  color: #1976d2;
+  color:rgb(1, 67, 97);
 }
 
-.instructions{
+.restartButton:hover{
+  color: #FF0000;
+}
+
+.gameOver{
   text-align: center;
 }
 
-.loadingBar{
-  margin-top: 25px;
+.gameOverTitle{
+  padding-top: 50px;
+  color:rgb(1, 67, 97);
 }
 
-.footer{
-  align-items: center;
-  padding-top: 50px;
-  position: relative;
-  left: 0;
-  bottom: 0;
-  height: 100px;
-  width: 100%;
-  overflow: hidden;
+.recapTitle{
+  text-align: left;
+  padding-top: 100px;
+  padding-left: 15%;
+  color:rgb(1, 67, 97);
 }

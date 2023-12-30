@@ -4,34 +4,42 @@ import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Typography from '@mui/material/Typography';
 
-//TODO: Restart Game on click should actually restart game
 
-type GameData = {
+type FooterProps = {
   score: number,
-  round: number
+  round: number,
+  restartGame: Function
 }
 
-export default function Footer(props: GameData) {
-  const {score, round} = props;
-  const [value, setValue] = React.useState(0);
+export default function Footer(props: FooterProps) {
+  const {score, round, restartGame} = props;
   
   return (
-      <Box className="footer">
-        <BottomNavigation
-          showLabels
-          value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-          }}
-        >
-          <BottomNavigationAction label="Restart Game" icon={<RestoreIcon />} />
-          <Typography className="gameData" variant="h6">Score: {score}</Typography>
-          <Typography className="gameData" variant="h6">Round: {round}</Typography>
-
+      <Box 
+        className="footer" 
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <BottomNavigation showLabels>
+          <BottomNavigationAction 
+            onClick={() => restartGame()} 
+            label="Restart Game" 
+            icon={<RestoreIcon/>}
+            className="restartButton" 
+          />
+          <Typography 
+              className="gameData" 
+              variant="h5">
+              <strong>Score: {score}</strong> 
+          </Typography>
+          <Typography 
+              className="gameData" 
+              variant="h5">
+              <strong>Round: {round}</strong>
+          </Typography>
         </BottomNavigation>
       </Box>
   );
