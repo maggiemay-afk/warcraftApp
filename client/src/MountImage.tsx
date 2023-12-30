@@ -10,7 +10,8 @@ import './App.css';
 
 type MountImageProps = {
   updateScore: Function,
-  updateRound: Function
+  updateRound: Function,
+  allGameData: Array<string>
 }
 
 type ImageResponse = {
@@ -19,8 +20,12 @@ type ImageResponse = {
   answer: string,
 }
 
+function updateAllGameData() {
+
+}
+
 const MountImage = (props: MountImageProps) => {
-  const {updateScore, updateRound} = props;
+  const {updateScore, updateRound, allGameData} = props;
   const [image, setImage] = useState<ImageResponse|undefined>();
   const [choice, setChoice] = useState<string|undefined>();
   
@@ -31,6 +36,11 @@ const MountImage = (props: MountImageProps) => {
     .then((data) => {
 
       setImage(data);
+
+    })
+    .then((data) => {
+
+      updateAllGameData();
 
     })
     .catch((error) => {
@@ -44,9 +54,8 @@ const MountImage = (props: MountImageProps) => {
 
   if (!image) {
     return (
-      //TODO: loading spinner MUI
       <Box sx={{ width: '100%' }}>
-        <LinearProgress className="LoadingBar"/>
+        <LinearProgress className="loadingBar"/>
       </Box>
     )
   }
@@ -54,7 +63,6 @@ const MountImage = (props: MountImageProps) => {
   const evaluate = (choice: string) => {
 
     setChoice(choice);
-    updateRound();
 
     if (choice === image.answer) {
       updateScore();
@@ -64,6 +72,7 @@ const MountImage = (props: MountImageProps) => {
       setImage(undefined);
       setNewMount();
       setChoice(undefined);
+      updateRound();
      }, 10000)
 
   }
@@ -73,18 +82,18 @@ const MountImage = (props: MountImageProps) => {
   if(choice !== undefined) {
     
     Display = choice === image.answer
-      ? <Stack sx={{width: '50%'}}>
+      ? <Stack className="displayAlert" justifyContent="center" alignItems="center">
           <Alert variant="filled" severity="success">
             <AlertTitle>Correct</AlertTitle>
-            <p>Your Choice: <strong>{choice}</strong></p>
-            <p>Correct Answer: <strong>{image.answer}</strong></p>
+            <p className='displayAlertText'>Your Choice: <strong>{choice}</strong></p>
+            <p className='displayAlertText'>Correct Answer: <strong>{image.answer}</strong></p>
           </Alert>
         </Stack>
-      : <Stack sx={{width: '50%'}}>
+      : <Stack className="displayAlert" justifyContent="center" alignItems="center">
           <Alert variant="filled" severity="error">
             <AlertTitle>Incorrect</AlertTitle>
-            <p>Your Choice: <strong>{choice}</strong></p>
-            <p>Correct Answer: <strong>{image.answer}</strong></p>
+            <p className='displayAlertText'>Your Choice: <strong>{choice}</strong></p>
+            <p className='displayAlertText'>Correct Answer: <strong>{image.answer}</strong></p>
           </Alert>        
         </Stack>
   }

@@ -1,5 +1,27 @@
 .App {
+  
+}
+
+.header{
+  width: 100%;
+  text-align: center;
+}
+
+.headerImage{
+  display: inline-block;
+  margin: 0 auto;
+  height: auto;
+  max-width: 100%
+}
+
+.logo{
+  height: 50px;
+  opacity: 25%;
+}
+
+.headerTitle{
   text-align: left;
+  padding-left: 20px;
 }
 
 .mountImage{
@@ -9,18 +31,41 @@
   margin-right: auto; 
 }
 
-.mount-name{
-  display: grid;
+.displayAlert{
+  padding-top: 25px;
 }
 
-.GameData{
+.displayAlertText {
+  display: inline;
+  padding: 10px;
+}
+
+.gameDataParent{
+  text-align: center;
+  padding-top: 50px;
+}
+
+.gameData{
+  display: inline;
+  padding: 20px;
+  color: #1976d2;
+}
+
+.instructions{
   text-align: center;
 }
 
-.Instructions{
-  text-align: center;
-}
-
-.LoadingBar{
+.loadingBar{
   margin-top: 25px;
+}
+
+.footer{
+  align-items: center;
+  padding-top: 50px;
+  position: relative;
+  left: 0;
+  bottom: 0;
+  height: 100px;
+  width: 100%;
+  overflow: hidden;
 }

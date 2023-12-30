@@ -1,15 +1,20 @@
-import React, {useState} from 'react';
-import logo from './logo.svg';
 import './App.css';
-import MountImage from './MountImage';
-import { TextField, Button } from '@mui/material';
 import Header from './Header';
 import Footer from './Footer';
+import MountImage from './MountImage';
+import GameOver from './GameOver';
+import React, {useState} from 'react';
+import { TextField, Button } from '@mui/material';
+import Typography from '@mui/material/Typography';
+
 
 function App() {
   const [gameStarted, setGameStarted] = useState<Boolean>(false);
+  const [gameOver, setGameOver] = useState<Boolean>(false);
+  const [finalGameData, setFinalGameData] = useState<Array<string>>([]);
   const [score, setScore] = useState<number>(0);
   const [rounds, setRounds] = useState<number>(1);
+  
 
   function startGame() {
     setGameStarted(true);
@@ -20,16 +25,34 @@ function App() {
   }
 
   function incrementRound() {
-    setRounds(rounds + 1);
+    if (rounds === 5) {
+      setGameOver(true);
+
+    } else {
+      setRounds(rounds + 1);
+    }
   }
+
+  function addFinalGameData(){
+
+  }
+
+  function checkFinalGameData(){
+
+  }
+
 
   return (
     <div className="App">
-      
       <Header></Header>
       <div>
-        { gameStarted == false 
-          ? <div className="Instructions">
+        {gameOver === true
+        ? <div> 
+            <GameOver></GameOver>
+            <Footer score={score} round={rounds}></Footer>
+          </div>
+        : gameStarted === false 
+          ? <div className="instructions">
               <h3>
                 This is a trivia game for guessing mount names in World of Warcraft<br></br>
                 A picture will be provided from the Blizzard API followed by multiple choice options<br></br>
@@ -39,15 +62,11 @@ function App() {
               <Button variant="contained" size="large" onClick={startGame}>START</Button>
             </div>
           : <div> 
-              <MountImage updateRound={incrementRound} updateScore={incrementScore}/>
-              <div className="GameData">
-                <h2>Score: {score}</h2>
-                <h2>Round: {rounds}</h2>
-              </div>
+              <MountImage updateRound={incrementRound} updateScore={incrementScore} allGameData={finalGameData}/>
+              <Footer score={score} round={rounds}></Footer>
             </div>
         }
       </div>
-      <Footer></Footer>
     </div>
   );
 }
