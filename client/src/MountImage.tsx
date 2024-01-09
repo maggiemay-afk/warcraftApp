@@ -7,6 +7,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Box from '@mui/material/Box'; 
 import './App.css';
 import { GameData } from './types';
+import { error } from 'console';
 
 type MountImageProps = {
   updateScore: Function,
@@ -24,9 +25,21 @@ type ImageResponse = {
 function checkGameData(allGameData: GameData[], data: ImageResponse): boolean{
 
   //see if the current image is already in finalGameData
-
+  //TODO: if we add sudden death round, worst case is 1069 or all mounts 
+  for (let i=0; i<allGameData.length; i++){
+    if(data.image === allGameData[i].image){
+      return true;
+    }
+  }
   return false;
 
+}
+
+class DuplicateMountError extends Error {
+  constructor(message: string, imageResponse: ImageResponse) {
+    super(message); 
+    this.name = "DuplicateMountError"; 
+  }
 }
 
 
@@ -34,23 +47,24 @@ const MountImage = (props: MountImageProps) => {
   const {updateScore, updateRound, updateGameData, gameData} = props;
   const [image, setImage] = useState<ImageResponse|undefined>();
   const [choice, setChoice] = useState<string|undefined>();
-  
 
-  const setNewMount = useCallback(() => {
-    fetch('http://localhost:3001/new-mount')
-    .then((res) => res.json())
-    .then((data) => {
-
-       //if (!checkGameData(gameData, data)) {
-       // setImage(data);
-       //} 
-       //call API again? 
-       setImage(data);
-
-    })
-    .catch((error) => {
-      console.log(error.message);
-    })
+  const setNewMount = useCallback(async () => {
+    for (let i=0; i < 3; i++) {
+      try {
+        return await fetch('http://localhost:3001/new-mount')
+          .then((res) => res.json())
+          .then((data) => {
+            if (!checkGameData(gameData, data)) {
+              setImage(data);
+            } else {
+              throw DuplicateMountError;
+            }
+          })
+      } catch(err){
+          const isLastAttempt = i + 1 === 3;
+          if (isLastAttempt) throw err;
+      }
+   }
   }, []);
 
   useEffect(() => {

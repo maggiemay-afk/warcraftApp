@@ -17,6 +17,14 @@ type finalGameData = {
   restartGame: Function
 }
 
+function userAnswer(choice: string, answer: string) {
+  if (choice === answer) {
+    return <span>you: {choice}</span>
+  } else {
+    return <span className="incorrectAnswer">you: {choice}</span>
+  }
+}
+
 export default function GameOver(props: finalGameData) {
   const {finalGameData, score, rounds, restartGame} = props;
 
@@ -45,7 +53,7 @@ export default function GameOver(props: finalGameData) {
                 />
                 <ImageListItemBar
                 title={item.answer}
-                subtitle={<span>you: {item.choice}</span>}
+                subtitle={userAnswer(item.choice, item.answer)}
                 position='below'
               />
               </ImageListItem>

@@ -13,10 +13,12 @@ function App() {
   const [finalGameData, setFinalGameData] = useState<GameData[]>([]);
   const [score, setScore] = useState<number>(0);
   const [rounds, setRounds] = useState<number>(1);
+  const [totalRounds, setTotalRounds] = useState<number>();
   
 
-  function startGame() {
+  function startGame(totalRounds: number) {
     setGameStarted(true);
+    setTotalRounds(totalRounds);
   }
 
   function restartGame(){
@@ -32,8 +34,8 @@ function App() {
   }
 
   function incrementRound() {
-    if (rounds === 10) {
-      setGameOver(true);
+    if (rounds === totalRounds) {
+      setGameOver(true);  
 
     } else {
       setRounds(rounds + 1);

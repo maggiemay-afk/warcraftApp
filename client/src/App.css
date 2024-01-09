@@ -99,3 +99,7 @@
   padding-left: 15%;
   color:rgb(1, 67, 97);
 }
+
+.incorrectAnswer{
+  color: red;
+}

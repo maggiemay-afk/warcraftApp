@@ -74,8 +74,10 @@ app.get('/', (req: Request, res: Response) => {
     res.send("Home page - Total Mounts: " + totalMounts);
 })
 
+// TODO: Add log for how long this entire function takes to run
 app.get('/new-mount', async (req: Request, res: Response) => {
-    
+    // Start timer
+
     if (!token) {
         token = await getToken();
     }
@@ -145,6 +147,7 @@ app.get('/new-mount', async (req: Request, res: Response) => {
         'answer': answer
     }
 
+    // Stop timer and Log
     console.log(response)
     res.send(response);
 
