@@ -13,7 +13,7 @@ function App() {
   const [finalGameData, setFinalGameData] = useState<GameData[]>([]);
   const [score, setScore] = useState<number>(0);
   const [rounds, setRounds] = useState<number>(1);
-  const [totalRounds, setTotalRounds] = useState<number>();
+  const [totalRounds, setTotalRounds] = useState<number>(0);
   
 
   function startGame(totalRounds: number) {
@@ -35,11 +35,15 @@ function App() {
 
   function incrementRound() {
     if (rounds === totalRounds) {
-      setGameOver(true);  
+      endGame(); 
 
     } else {
       setRounds(rounds + 1);
     }
+  }
+
+  function endGame() {
+    setGameOver(true);
   }
 
   function updateGameData(roundImage: string, roundChoice: string, roundAnswer: string){
@@ -64,6 +68,7 @@ function App() {
               finalGameData={finalGameData}
               score={score}
               rounds={rounds}
+              totalRounds={totalRounds}
               restartGame={restartGame}
             />
           </div>
@@ -73,8 +78,10 @@ function App() {
               <MountImage 
                 updateRound={incrementRound} 
                 updateScore={incrementScore} 
-                updateGameData={updateGameData} 
+                updateGameData={updateGameData}
+                endGame={endGame} 
                 gameData={finalGameData}
+                totalRounds={totalRounds}
               />
             <Footer 
               score={score} 

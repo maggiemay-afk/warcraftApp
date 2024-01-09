@@ -13,7 +13,9 @@ type MountImageProps = {
   updateScore: Function,
   updateRound: Function,
   updateGameData: Function,
-  gameData: GameData[]
+  endGame: Function,
+  gameData: GameData[],
+  totalRounds: number
 }
 
 type ImageResponse = {
@@ -22,10 +24,10 @@ type ImageResponse = {
   answer: string,
 }
 
+//check for duplicate mounts in a single game, not used in sudden death
 function checkGameData(allGameData: GameData[], data: ImageResponse): boolean{
 
-  //see if the current image is already in finalGameData
-  //TODO: if we add sudden death round, worst case is 1069 or all mounts 
+  console.log("checking duplicates");
   for (let i=0; i<allGameData.length; i++){
     if(data.image === allGameData[i].image){
       return true;
@@ -44,7 +46,7 @@ class DuplicateMountError extends Error {
 
 
 const MountImage = (props: MountImageProps) => {
-  const {updateScore, updateRound, updateGameData, gameData} = props;
+  const {updateScore, updateRound, updateGameData, endGame, gameData, totalRounds} = props;
   const [image, setImage] = useState<ImageResponse|undefined>();
   const [choice, setChoice] = useState<string|undefined>();
 
@@ -54,11 +56,19 @@ const MountImage = (props: MountImageProps) => {
         return await fetch('http://localhost:3001/new-mount')
           .then((res) => res.json())
           .then((data) => {
-            if (!checkGameData(gameData, data)) {
-              setImage(data);
-            } else {
-              throw DuplicateMountError;
-            }
+            
+            if (totalRounds !== -1) {
+
+              if (!checkGameData(gameData, data)) {
+                setImage(data);
+              } else {
+                throw DuplicateMountError;
+              }
+
+           } else if (totalRounds === -1){
+            setImage(data);
+           }
+
           })
       } catch(err){
           const isLastAttempt = i + 1 === 3;
@@ -73,7 +83,7 @@ const MountImage = (props: MountImageProps) => {
 
   if (!image) {
     return (
-      <Box sx={{ width: '100%' }}>
+      <Box className="loadingBarBox" sx={{ width: '100%' }}>
         <LinearProgress className="loadingBar"/>
       </Box>
     )
@@ -82,19 +92,31 @@ const MountImage = (props: MountImageProps) => {
   const evaluate = (choice: string) => {
 
     setChoice(choice);
-    updateGameData(image.image, choice, image.answer);
-
-    if (choice === image.answer) {
-      updateScore();
+    
+    //Don't track game data in sudden death
+    if (totalRounds !== -1) {
+      updateGameData(image.image, choice, image.answer);
     }
+    
+    if (choice !== image.answer && totalRounds === -1){
+      //set game over true 
+      updateGameData(image.image, choice, image.answer);
+      endGame();
 
-     setTimeout(() => {
-      setImage(undefined);
-      setNewMount();
-      setChoice(undefined);
-      updateRound();
-     }, 1000)
+    } else {
+      
+      if (choice === image.answer) {
+        updateScore();
+      }
+      
+      setTimeout(() => {
+        setImage(undefined);
+        setNewMount();
+        setChoice(undefined);
+        updateRound();
+      }, 1000)
 
+    }
   }
 
   let Display = undefined;
@@ -123,7 +145,10 @@ const MountImage = (props: MountImageProps) => {
 
       {Display}
 
-      <img className='mountImage' src={image.image}></img>
+      <div className="placeholderImage">
+        <img className='mountImage' src={image.image}></img>
+      </div>
+        
       
       <Stack direction="row" justifyContent="center" alignItems="center" spacing={2}>
         {image.names.map((item) => <Button disabled={!!choice} variant="outlined" onClick={() => evaluate(item)}> {item} </Button>)}
