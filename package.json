@@ -1,7 +1,8 @@
 {
   "scripts": {
-    "dev": "nodemon src/app.ts",
-    "build": "cd ../client && npm install && npm run build",
+    "devClient": "cd client && npm run start",
+    "devServer": "nodemon server/app.ts",
+    "build": "cd client && npm install && npm run build",
     "generateMountChoices": "ts-node ./scripts/multipleChoiceCompletion.ts"
   },
   "dependencies": {

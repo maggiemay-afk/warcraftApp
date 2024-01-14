@@ -1,4 +1,4 @@
-import mounts from '../src/mounts.json';
+import mounts from '../server/mounts.json';
 import fs from 'fs';
 import path from 'path';
 import axios, { AxiosRequestConfig } from 'axios';

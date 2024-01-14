@@ -72,7 +72,7 @@ const getToken = async (): Promise<string> => { //async function that returns a 
 }
 
 // Have Node serve the files for our built React app
-app.use(express.static(path.resolve(__dirname, '../../client/build')));
+app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 app.get('/total-mounts', (req: Request, res: Response) => {
     res.send("Total mounts from Blizzard: " + totalMounts);
@@ -158,7 +158,7 @@ app.get('/new-mount', async (req: Request, res: Response) => {
 })
 
 app.get('*', (req: Request ,res: Response ) => {
-    res.sendFile(path.resolve(__dirname, '../../client/build', 'index.html'));
+    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 })
 
 app.listen(port, function () {
