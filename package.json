@@ -2,7 +2,10 @@
   "scripts": {
     "devClient": "cd client && npm run start",
     "devServer": "nodemon server/app.ts",
-    "build": "cd client && npm install && npm run build",
+    "start": "node dist/app.js",
+    "buildClient": "cd client && npm install && npm run build",
+    "buildServer": ".\\node_modules\\.bin\\tsc",
+    "build": "npm run buildClient && npm run buildServer", 
     "generateMountChoices": "ts-node ./scripts/multipleChoiceCompletion.ts"
   },
   "dependencies": {
