@@ -125,14 +125,14 @@ const MountImage = (props: MountImageProps) => {
       ? <Stack className="displayAlert" justifyContent="center" alignItems="center">
           <Alert variant="filled" severity="success">
             <AlertTitle>Correct</AlertTitle>
-            <p className='displayAlertText'>Your Choice: <strong>{choice}</strong></p>
+            <p className='displayAlertText'>Your Choice: <strong>{choice}</strong></p><br></br>
             <p className='displayAlertText'>Correct Answer: <strong>{image.answer}</strong></p>
           </Alert>
         </Stack>
       : <Stack className="displayAlert" justifyContent="center" alignItems="center">
           <Alert variant="filled" severity="error">
             <AlertTitle>Incorrect</AlertTitle>
-            <p className='displayAlertText'>Your Choice: <strong>{choice}</strong></p>
+            <p className='displayAlertText'>Your Choice: <strong>{choice}</strong></p><br></br>
             <p className='displayAlertText'>Correct Answer: <strong>{image.answer}</strong></p>
           </Alert>        
         </Stack>
@@ -140,8 +140,13 @@ const MountImage = (props: MountImageProps) => {
 
   return (
     <div>
-      {Display}
-      <img className='mountImage' src={image.image}></img>
+      <div className="mountImageParent">
+        <img className='mountImage' src={image.image}></img>
+        <div className='display'>
+          {Display}
+        </div>
+      </div>
+      
       <Stack direction="row" justifyContent="center" alignItems="center" spacing={2}>
         {image.names.map((item) => <Button disabled={!!choice} variant="outlined" onClick={() => evaluate(item)}> {item} </Button>)}
       </Stack>

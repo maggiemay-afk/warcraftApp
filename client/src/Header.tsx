@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 export default function Header() {
   return (
     <Box className="header" sx={{ flexGrow: 1 }}>
-        <img className="headerImage" src='./halfhill-header.png'></img>
+        
         <AppBar position="static">
             <Toolbar>
                 <Typography 

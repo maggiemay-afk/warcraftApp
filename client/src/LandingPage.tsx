@@ -44,6 +44,7 @@ export default function LandingPage(props: HeaderProps) {
         display="flex"
         justifyContent="center"
         alignItems="center"
+        padding-bottom="20px"
       >
         <Button 
           className="startButton" 
