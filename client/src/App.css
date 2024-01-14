@@ -116,6 +116,12 @@
   }
 }
 
+@media screen and (max-width: 600px) {
+  .mountImage{
+    width: 100%;
+  }
+}
+
 @media screen and (min-width: 1921px), print {
 
   .headerImage {
