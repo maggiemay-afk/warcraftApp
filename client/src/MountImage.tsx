@@ -26,15 +26,12 @@ type ImageResponse = {
 
 //check for duplicate mounts in a single game, not used in sudden death
 function checkGameData(allGameData: GameData[], data: ImageResponse): boolean{
-
-  console.log("checking duplicates");
   for (let i=0; i<allGameData.length; i++){
     if(data.image === allGameData[i].image){
       return true;
     }
   }
   return false;
-
 }
 
 class DuplicateMountError extends Error {
@@ -83,8 +80,9 @@ const MountImage = (props: MountImageProps) => {
 
   if (!image) {
     return (
-      <Box className="loadingBarBox" sx={{ width: '100%' }}>
+      <Box sx={{ width: '100%' }}>
         <LinearProgress className="loadingBar"/>
+        <img className='mountImage' src="./600x600-pure-black.png"></img>
       </Box>
     )
   }
@@ -99,7 +97,6 @@ const MountImage = (props: MountImageProps) => {
     }
     
     if (choice !== image.answer && totalRounds === -1){
-      //set game over true 
       updateGameData(image.image, choice, image.answer);
       endGame();
 
@@ -114,8 +111,7 @@ const MountImage = (props: MountImageProps) => {
         setNewMount();
         setChoice(undefined);
         updateRound();
-      }, 1000)
-
+      }, 5000)
     }
   }
 
@@ -142,18 +138,11 @@ const MountImage = (props: MountImageProps) => {
 
   return (
     <div>
-
       {Display}
-
-      <div className="placeholderImage">
-        <img className='mountImage' src={image.image}></img>
-      </div>
-        
-      
+      <img className='mountImage' src={image.image}></img>
       <Stack direction="row" justifyContent="center" alignItems="center" spacing={2}>
         {image.names.map((item) => <Button disabled={!!choice} variant="outlined" onClick={() => evaluate(item)}> {item} </Button>)}
       </Stack>
-
     </div>
   )
 
