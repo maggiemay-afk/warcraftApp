@@ -9,6 +9,8 @@ import './App.css';
 import { GameData } from './types';
 import { error } from 'console';
 
+const backendURL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001';
+
 type MountImageProps = {
   updateScore: Function,
   updateRound: Function,
@@ -50,7 +52,7 @@ const MountImage = (props: MountImageProps) => {
   const setNewMount = useCallback(async () => {
     for (let i=0; i < 3; i++) {
       try {
-        return await fetch('http://localhost:3001/new-mount')
+        return await fetch(backendURL + '/new-mount')
           .then((res) => res.json())
           .then((data) => {
             
