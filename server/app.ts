@@ -7,7 +7,7 @@ import cors from 'cors';
 require('dotenv').config();
 
 const app: Application = express();
-const port: number = 3001;
+const port: any = process.env.PORT || 3001;
 let token: string;
 const totalMounts: number = mounts.mounts.length;
 
