@@ -4,7 +4,7 @@
     "devServer": "nodemon server/app.ts",
     "start": "node dist/app.js",
     "buildClient": "cd client && npm install && npm run build",
-    "buildServer": ".\\node_modules\\.bin\\tsc",
+    "buildServer": "npm install && .\\node_modules\\.bin\\tsc",
     "build": "npm run buildClient && npm run buildServer", 
     "generateMountChoices": "ts-node ./scripts/multipleChoiceCompletion.ts"
   },
