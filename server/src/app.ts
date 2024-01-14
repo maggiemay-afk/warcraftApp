@@ -1,5 +1,6 @@
 import express, { Application, Request, Response } from 'express';
 import axios, {isCancel, AxiosError} from 'axios';
+const path = require('path');
 //import mounts from './mounts.json';
 import mounts from './aiGeneratedNames.json';
 import cors from 'cors';
@@ -70,8 +71,11 @@ const getToken = async (): Promise<string> => { //async function that returns a 
 
 }
 
-app.get('/', (req: Request, res: Response) => {
-    res.send("Home page - Total Mounts: " + totalMounts);
+// Have Node serve the files for our built React app
+app.use(express.static(path.resolve(__dirname, '../../client/build')));
+
+app.get('/total-mounts', (req: Request, res: Response) => {
+    res.send("Total mounts from Blizzard: " + totalMounts);
 })
 
 // TODO: Add log for how long this entire function takes to run
@@ -151,6 +155,10 @@ app.get('/new-mount', async (req: Request, res: Response) => {
     console.log(response)
     res.send(response);
 
+})
+
+app.get('*', (req: Request ,res: Response ) => {
+    res.sendFile(path.resolve(__dirname, '../../client/build', 'index.html'));
 })
 
 app.listen(port, function () {

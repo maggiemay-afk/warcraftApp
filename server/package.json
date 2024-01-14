@@ -1,6 +1,7 @@
 {
   "scripts": {
     "dev": "nodemon src/app.ts",
+    "build": "cd client && npm install && npm run build",
     "generateMountChoices": "ts-node ./scripts/multipleChoiceCompletion.ts"
   },
   "dependencies": {
@@ -17,5 +18,8 @@
     "nodemon": "^2.0.22",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
+  },
+  "engines": {
+    "node": "18.15.0"
   }
 }
