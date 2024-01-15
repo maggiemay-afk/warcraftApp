@@ -64,14 +64,16 @@ export default function GameOver(props: finalGameData) {
             ))}
         </ImageList>
       </Box>
-      <Button 
-        className="startButton" 
-        variant="contained" 
-        color="secondary"
-        size="large" 
-        onClick={() => restartGame()}>
-          Restart Game
-      </Button>
+      <div className="startButton" >
+        <Button 
+          variant="contained" 
+          color="primary"
+          size="large" 
+          onClick={() => restartGame()}
+        >
+        Restart Game
+        </Button> 
+      </div>
     </div>
   )
 }

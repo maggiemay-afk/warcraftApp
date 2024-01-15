@@ -148,11 +148,19 @@ const MountImage = (props: MountImageProps) => {
       </div>
       
       <Stack direction="row" justifyContent="center" alignItems="center" spacing={2}>
-        {image.names.map((item) => <Button disabled={!!choice} variant="outlined" onClick={() => evaluate(item)}> {item} </Button>)}
+        {image.names.map((item) => 
+          <Button 
+            disabled={!!choice} 
+            variant="outlined" 
+            color="secondary" 
+            onClick={() => evaluate(item)}
+          > 
+          {item} 
+          </Button>
+        )}
       </Stack>
     </div>
   )
-
 } 
 
 export default MountImage;

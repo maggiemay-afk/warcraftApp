@@ -6,6 +6,42 @@ import GameOver from './GameOver';
 import LandingPage from './LandingPage';
 import { GameData } from './types';
 import React, {useState} from 'react';
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+
+export const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#af861f',
+    },
+    secondary: {
+      main: '#121858',
+    },
+  },
+  components: {
+    MuiAlert: {
+      styleOverrides: {
+        standardSuccess: {
+          backgroundColor: 'green',
+          color: 'white'
+        },
+        standardError: {
+          backgroundColor: 'red',
+          color: 'white'
+        },
+        standardWarning: {
+          backgroundColor: 'orange',
+          color: 'white'
+        },
+        standardInfo: {
+          backgroundColor: '#121858',
+          color: '#121858',
+          border: '#121858'
+        }
+      }
+    }
+  }
+});
+
 
 function App() {
   const [gameStarted, setGameStarted] = useState<Boolean>(false);
@@ -59,8 +95,11 @@ function App() {
 
 
   return (
+    
+    <ThemeProvider theme={theme}>
+    
     <div className="App">
-      <Header></Header>
+      <Header restartGame={restartGame}></Header>
       <div>
         {gameOver === true
         ? <div> 
@@ -92,6 +131,8 @@ function App() {
         }
       </div>
     </div>
+  </ThemeProvider>
+
   );
 }
 

@@ -5,8 +5,13 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
+type restart = {
+  restartGame: Function
+}
 
-export default function Header() {
+export default function Header(props: restart) {
+  const {restartGame} = props;
+
   return (
     <Box className="header" sx={{ flexGrow: 1 }}>
         
@@ -15,7 +20,8 @@ export default function Header() {
                 <Typography 
                   className="headerTitle" 
                   variant="h5" 
-                  component="div" 
+                  component="div"
+                  onClick={() => restartGame()} 
                   sx={{ flexGrow: 1 }}>
                     Mount Trivia
                 </Typography>

@@ -15,7 +15,6 @@ export default function LandingPage(props: HeaderProps) {
   const {startGame} = props;
 
   return (
-
     <div className="landingPage">
       <Box
         className="landingPageBox"
@@ -24,7 +23,7 @@ export default function LandingPage(props: HeaderProps) {
         alignItems="center"
       >
         <Stack className="gameOverTitle" sx={{ maxWidth: '100%' }}>
-          <Alert sx={{display: "flex", justifyContent: "center"}} variant="outlined" severity="info" icon={false}>
+          <Alert sx={{display: "flex", justifyContent: "center", color: '#014361', borderColor: 'secondary.main'}} variant="outlined" icon={false}>
             <Typography variant="h2">Instructions</Typography>
             <Typography className="instructionP" variant="h6" >
               This is a trivia game for guessing mount names in World of Warcraft<br></br>
@@ -48,14 +47,16 @@ export default function LandingPage(props: HeaderProps) {
       >
         <Button 
           className="startButton" 
-          variant="contained" 
+          variant="contained"
+          color="secondary" 
           size="large" 
           onClick={() => startGame(10)}
         > Mini Game
         </Button>
         <Button        
           className="startButton" 
-          variant="contained" 
+          variant="contained"
+          color="secondary" 
           size="large"
           onClick={() => startGame(20)} 
         > Normal Game
@@ -63,15 +64,11 @@ export default function LandingPage(props: HeaderProps) {
         <Button        
           className="startButton" 
           variant="contained"
-          color="secondary" 
           size="large"
           onClick={() => startGame(-1)} 
         > Sudden Death 
         </Button>
-
       </Stack>
-
     </div>
   );
-
 }
