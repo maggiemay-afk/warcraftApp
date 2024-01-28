@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {Button} from '@mui/material/';
 import Stack from '@mui/material/Stack';
 import Alert from '@mui/material/Alert';
@@ -7,7 +7,6 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Box from '@mui/material/Box'; 
 import './App.css';
 import { GameData } from './types';
-import { error } from 'console';
 
 const backendURL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001';
 
@@ -17,7 +16,8 @@ type MountImageProps = {
   updateGameData: Function,
   endGame: Function,
   gameData: GameData[],
-  totalRounds: number
+  totalRounds: number,
+  setTimerID: Function
 }
 
 type ImageResponse = {
@@ -45,7 +45,7 @@ class DuplicateMountError extends Error {
 
 
 const MountImage = (props: MountImageProps) => {
-  const {updateScore, updateRound, updateGameData, endGame, gameData, totalRounds} = props;
+  const {updateScore, updateRound, updateGameData, endGame, gameData, totalRounds, setTimerID} = props;
   const [image, setImage] = useState<ImageResponse|undefined>();
   const [choice, setChoice] = useState<string|undefined>();
 
@@ -108,12 +108,15 @@ const MountImage = (props: MountImageProps) => {
         updateScore();
       }
       
-      setTimeout(() => {
+      let currentTimerID = setTimeout(() => {
         setImage(undefined);
         setNewMount();
         setChoice(undefined);
         updateRound();
       }, 5000)
+
+      setTimerID(currentTimerID);
+      
     }
   }
 

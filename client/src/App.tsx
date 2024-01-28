@@ -5,7 +5,7 @@ import MountImage from './MountImage';
 import GameOver from './GameOver';
 import LandingPage from './LandingPage';
 import { GameData } from './types';
-import React, {useState} from 'react';
+import {useState} from 'react';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 
 export const theme = createTheme({
@@ -44,20 +44,22 @@ export const theme = createTheme({
 
 
 function App() {
+  const [timerID, setTimerID] = useState<number>(-1);
   const [gameStarted, setGameStarted] = useState<Boolean>(false);
   const [gameOver, setGameOver] = useState<Boolean>(false);
   const [finalGameData, setFinalGameData] = useState<GameData[]>([]);
   const [score, setScore] = useState<number>(0);
   const [rounds, setRounds] = useState<number>(1);
   const [totalRounds, setTotalRounds] = useState<number>(0);
-  
 
   function startGame(totalRounds: number) {
     setGameStarted(true);
     setTotalRounds(totalRounds);
   }
 
-  function restartGame(){
+  function restartGame(warning: Boolean){
+    clearTimeout(timerID);
+    setTimerID(-1);
     setGameStarted(false);
     setGameOver(false);
     setFinalGameData([]);
@@ -95,44 +97,46 @@ function App() {
 
 
   return (
-    
     <ThemeProvider theme={theme}>
-    
-    <div className="App">
-      <Header restartGame={restartGame}></Header>
-      <div>
-        {gameOver === true
-        ? <div> 
-            <GameOver 
-              finalGameData={finalGameData}
-              score={score}
-              rounds={rounds}
-              totalRounds={totalRounds}
-              restartGame={restartGame}
-            />
-          </div>
-        : gameStarted === false 
-          ? <LandingPage startGame={startGame}/>
-          : <div> 
-              <MountImage 
-                updateRound={incrementRound} 
-                updateScore={incrementScore} 
-                updateGameData={updateGameData}
-                endGame={endGame} 
-                gameData={finalGameData}
+      <div className="App">
+        <Header 
+          totalRounds={totalRounds}
+          gameStarted={gameStarted}
+        />
+        <div>
+          {gameOver === true
+          ? <div> 
+              <GameOver 
+                finalGameData={finalGameData}
+                score={score}
+                rounds={rounds}
                 totalRounds={totalRounds}
+                restartGame={restartGame}
               />
-            <Footer 
-              score={score} 
-              round={rounds}
-              restartGame={restartGame}
-            />
             </div>
-        }
+          : gameStarted === false 
+            ? <LandingPage startGame={startGame}/>
+            : <div> 
+                <MountImage 
+                  updateRound={incrementRound} 
+                  updateScore={incrementScore} 
+                  updateGameData={updateGameData}
+                  endGame={endGame} 
+                  gameData={finalGameData}
+                  totalRounds={totalRounds}
+                  setTimerID = {setTimerID}
+                />
+              <Footer 
+                score={score} 
+                round={rounds}
+                totalRounds={totalRounds}
+                restartGame={restartGame}
+              />
+              </div>
+          }
+        </div>
       </div>
-    </div>
-  </ThemeProvider>
-
+    </ThemeProvider>
   );
 }
 

@@ -1,6 +1,5 @@
 import './App.css';
 import { GameData } from './types';
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ImageList from '@mui/material/ImageList';
@@ -34,35 +33,34 @@ export default function GameOver(props: finalGameData) {
       <Stack className="gameOverTitle" sx={{ width: '100%' }} spacing={2}>
         <Alert sx={{display: "flex", justifyContent: "center"}} variant="outlined" severity="info" icon={false}>
           {totalRounds === -1 
-          ? <Typography variant="h2">You made it: <strong>{rounds-1}</strong> rounds</Typography>
-          : <Typography variant="h2">Game Over. Score: <strong>{score/rounds*100}%</strong></Typography>
+            ? <Typography variant="h2">You made it: <strong>{rounds-1}</strong> rounds</Typography>
+            : <Typography variant="h2">Game Over. Score: <strong>{score/rounds*100}%</strong></Typography>
           }
         </Alert>
       </Stack>
-      
       <Typography className="recapTitle" variant="h2"><strong>recap</strong></Typography>
       <Box         
         display="flex"
         justifyContent="center"
         alignItems="center"
       >
-        <ImageList sx={{ width: 800, height: 450}} cols={3} rowHeight={350} >        
-            {finalGameData.map((item) => (
-              <ImageListItem key={item.image}>
-                <img
-                  srcSet={`${item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                  src={`${item.image}?w=164&h=164&fit=crop&auto=format`}
-                  alt={item.answer}
-                  loading="lazy"
-                />
-                <ImageListItemBar
-                title={item.answer}
-                subtitle={userAnswer(item.choice, item.answer)}
-                position='below'
+      <ImageList sx={{ width: 800, height: 450}} cols={3} rowHeight={350} >        
+          {finalGameData.map((item) => (
+            <ImageListItem key={item.image}>
+              <img
+                srcSet={`${item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                src={`${item.image}?w=164&h=164&fit=crop&auto=format`}
+                alt={item.answer}
+                loading="lazy"
               />
-              </ImageListItem>
-            ))}
-        </ImageList>
+              <ImageListItemBar
+              title={item.answer}
+              subtitle={userAnswer(item.choice, item.answer)}
+              position='below'
+            />
+            </ImageListItem>
+          ))}
+      </ImageList>
       </Box>
       <div className="startButton" >
         <Button 

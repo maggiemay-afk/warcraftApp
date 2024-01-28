@@ -1,4 +1,3 @@
-
 export type GameData = {
   image: string;
   choice: string;
