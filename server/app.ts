@@ -1,5 +1,5 @@
 import express, { Application, Request, Response } from 'express';
-import axios, {isCancel, AxiosError} from 'axios';
+import axios, { isCancel, AxiosError } from 'axios';
 const path = require('path');
 //import mounts from './mounts.json';
 import mounts from './aiGeneratedNames.json';
@@ -36,10 +36,10 @@ class BlizzardAPIError extends Error {
     data: object;
 
     constructor(message: string, status: number, data: object) {
-      super(message);
-      this.name = "BlizzardAPIError";
-      this.status = status;
-      this.data = data; 
+        super(message);
+        this.name = "BlizzardAPIError";
+        this.status = status;
+        this.data = data;
     }
 }
 
@@ -48,23 +48,23 @@ const getToken = async (): Promise<string> => { //async function that returns a 
 
     const authResponse = await axios.post("https://oauth.battle.net/token", new URLSearchParams({
         'grant_type': 'client_credentials'
-    }), 
-    {
-        auth: {
-            username: process.env.WOW_CLIENT_ID!,
-            password: process.env.WOW_CLIENT_SECRET!
-        }
+    }),
+        {
+            auth: {
+                username: process.env.WOW_CLIENT_ID!,
+                password: process.env.WOW_CLIENT_SECRET!
+            }
 
-    }).then(function (response) {
-        if(response.status != 200 || !response.data) {
-            throw new BlizzardAPIError("Invalid Auth Response", response.status, response.data);
-        }
+        }).then(function (response) {
+            if (response.status != 200 || !response.data) {
+                throw new BlizzardAPIError("Invalid Auth Response", response.status, response.data);
+            }
 
-        return response;
-    }).catch((error) => {
-        console.log(error);
-        throw error;
-    }); 
+            return response;
+        }).catch((error) => {
+            console.log(error);
+            throw error;
+        });
 
     token = authResponse.data.access_token;
     return token;
@@ -101,15 +101,18 @@ app.get('/new-mount', async (req: Request, res: Response) => {
             'Authorization': 'Bearer ' + token
         }
     }).then(function (response) {
-        if(response.status != 200 || !response.data) {
+        if (response.status != 200 || !response.data) {
             throw new BlizzardAPIError("Invalid mount details response", response.status, response.data);
         }
 
         return response;
     }).catch(function (error) {
-        console.log(error);
-        throw error;
+        console.error(error);
     });
+
+    if (!mountDetailResponse) {
+        return res.status(500).send();
+    }
 
     if (mountDetailResponse.data.creature_displays.length === 0) {
         throw new BlizzardAPIError("missing creature display", mountDetailResponse.status, mountDetailResponse.data);
@@ -126,7 +129,7 @@ app.get('/new-mount', async (req: Request, res: Response) => {
             'Authorization': 'Bearer ' + token
         }
     }).then(function (response) {
-        if(response.status != 200 || !response.data) {
+        if (response.status != 200 || !response.data) {
             throw new BlizzardAPIError("Invalid creature response", response.status, response.data);
         }
 
@@ -140,11 +143,11 @@ app.get('/new-mount', async (req: Request, res: Response) => {
     if (creatureResponse.data.assets.length === 0) {
         throw new BlizzardAPIError("missing creature assets", creatureResponse.status, creatureResponse.data);
     }
-    
+
     const mountImage = creatureResponse.data.assets[0].value
     let names = getAllMountNames(mountIndex);
     let answer = getTrueMountName(mountIndex);
-    
+
     const response: Object = {
         'image': mountImage,
         'names': names,
@@ -157,7 +160,7 @@ app.get('/new-mount', async (req: Request, res: Response) => {
 
 })
 
-app.get('*', (req: Request ,res: Response ) => {
+app.get('*', (req: Request, res: Response) => {
     res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 })
 

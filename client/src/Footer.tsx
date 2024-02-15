@@ -23,20 +23,20 @@ export default function Footer(props: FooterProps) {
       justifyContent="center"
       alignItems="center"
     >
-      <BottomNavigation showLabels>
+      <BottomNavigation className='bottom-nav' showLabels>
         <BottomNavigationAction 
           onClick={() => restartGame()} 
           label="Restart Game" 
           icon={<RestoreIcon/>}
-          className="restartButton" 
+          className="restart-button" 
         />
         <Typography 
-            className="gameData" 
+            className="game-data" 
             variant="h5">
             <strong>Score: {score}</strong> 
         </Typography>
         <Typography 
-            className="gameData" 
+            className="game-data" 
             variant="h5">
             {totalRounds === -1
               ?<strong>Round: {round}</strong>

@@ -1,62 +1,59 @@
+.App{
+  background-color: #212B2A;
+  overflow: hidden;
+  text-align: center;
+  min-height: 100%;
+}
+
+/*Header component styles*/
 .header{
   width: 100%;
   text-align: center;
-}
-
-.headerImage{
-  display: inline-block;
-  margin: 0 auto;
-  height: 200px;
-  width: 100%;
-  object-fit: cover;
+  background-color: transparent;
 }
 
 .logo{
-  height: 50px;
-  opacity: 25%;
+  height: 65px;
+  right: 0;
 }
 
-.headerTitle{
+.header-title{
   text-align: left;
 }
 
-.suddenDeathTitle{
+.sudden-death-title{
   padding-left: 10px;
   font-style: italic;
-  color: #121858;
+  color: #67032F;
 }
 
-.landingPage{
-  text-align: center;
+
+/*Landing page styles*/
+.mount-trivia{
+  position:absolute
 }
 
-.landingPageBox{
-  padding: 25px;
+.landing-buttons{
+  position: absolute;
+  right: 0;
 }
 
-.instructionP{
-  text-align: left;
+.start-button{
   padding-bottom: 20px;
-  padding-top: 20px;
-  padding-left: 40px;
-  padding-right: 40px;
 }
 
-.loadingBar{
-  margin-top: 20px;
-}
-
-.mountImageParent{
+/*MountImage component styles*/
+.mount-image-parent{
   position: relative;
 }
 
-.display{
-    position: absolute;
-    width: 100%;
-    bottom: 0;
+.display-result{
+  position: absolute;
+  width: 100%;
+  bottom: 0;
 }
 
-.mountImage{
+.mount-image{
   margin: 20px;
   display: block;
   margin-left: auto;
@@ -65,66 +62,72 @@
   width: 500px;
 }
 
-.displayAlertText {
+.button-stack{
+  padding-bottom: 20px;
+}
+
+.display-alert-text {
   display: inline;
   padding: 10px;
 }
 
+/*Footer component styles*/
 .footer{
   position: relative;
-  left: 0;
-  bottom: 0;
   height: 100px;
-  width: 100%;
-  overflow: hidden;
+  margin: 10px;
+  width: auto;
 }
 
-.gameDataParent{
-  text-align: center;
-  padding-top: 50px;
+.bottom-nav{
+  padding: 15px;
+  align-items: center;
+  border-radius: 50px;
+  background-color: #67032F;
 }
 
-.gameData{
+.game-data{
   display: inline;
   padding: 20px;
-  color:rgb(1, 67, 97);
+  color: black;
 }
 
-.restartButton:hover{
+.restart-button:hover{
   color: #FF0000;
 }
 
-.gameOver{
+/*Game over component styles*/
+.game-over{
   text-align: center;
 }
 
-.gameOverTitle{
+.game-over-title{
   padding-top: 50px;
-  color:rgb(1, 67, 97);
+  color: white;
+  border: #67032F;
 }
 
-.recapTitle{
+.recap-title{
   text-align: left;
   padding-top: 100px;
   padding-left: 15%;
-  color:rgb(1, 67, 97);
+  color: white;
 }
 
-.startButton{
-  padding-bottom: 20px;
+.recap-image-title{
+  color: white;
 }
 
-.incorrectAnswer{
+.incorrect-answer{
   color: red;
+  size: 1rem;
 }
 
+/*Media queries*/
 @media screen and (max-width: 600px) {
   .mountImage{
     width: 100%;
   }
 }
-
-
-
 
 
