@@ -6,40 +6,40 @@ import GameOver from './GameOver';
 import LandingPage from './LandingPage';
 import { GameData } from './types';
 import {useState} from 'react';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 export const theme = createTheme({
   palette: {
     primary: {
-      main: '#af861f',
+      main: '#ffffff',
     },
     secondary: {
-      main: '#121858',
+      main: '#67032F',
     },
   },
-  components: {
-    MuiAlert: {
-      styleOverrides: {
-        standardSuccess: {
-          backgroundColor: 'green',
-          color: 'white'
-        },
-        standardError: {
-          backgroundColor: 'red',
-          color: 'white'
-        },
-        standardWarning: {
-          backgroundColor: 'orange',
-          color: 'white'
-        },
-        standardInfo: {
-          backgroundColor: '#121858',
-          color: '#121858',
-          border: '#121858'
-        }
-      }
-    }
-  }
+  typography: {
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
 });
 
 
@@ -99,10 +99,6 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <Header 
-          totalRounds={totalRounds}
-          gameStarted={gameStarted}
-        />
         <div>
           {gameOver === true
           ? <div> 
@@ -116,7 +112,11 @@ function App() {
             </div>
           : gameStarted === false 
             ? <LandingPage startGame={startGame}/>
-            : <div> 
+            : <div>
+                <Header
+                  totalRounds={totalRounds}
+                  gameStarted={gameStarted}
+                />
                 <MountImage 
                   updateRound={incrementRound} 
                   updateScore={incrementScore} 

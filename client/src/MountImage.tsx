@@ -3,10 +3,10 @@ import {Button} from '@mui/material/';
 import Stack from '@mui/material/Stack';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
-import LinearProgress from '@mui/material/LinearProgress';
 import Box from '@mui/material/Box'; 
 import './App.css';
 import { GameData } from './types';
+import placeholder from "./images/600x600-pure-black.png"
 
 const backendURL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001';
 
@@ -74,7 +74,7 @@ const MountImage = (props: MountImageProps) => {
           if (isLastAttempt) throw err;
       }
    }
-  }, []);
+  }, [gameData, totalRounds]);
 
   useEffect(() => {
       setNewMount();
@@ -83,8 +83,7 @@ const MountImage = (props: MountImageProps) => {
   if (!image) {
     return (
       <Box sx={{ width: '100%' }}>
-        <LinearProgress className="loadingBar"/>
-        <img className='mountImage' src="./600x600-pure-black.png"></img>
+        <img alt="placeholder" className='mountImage' src={placeholder}></img>
       </Box>
     )
   }
@@ -125,37 +124,36 @@ const MountImage = (props: MountImageProps) => {
   if(choice !== undefined) {
     
     Display = choice === image.answer
-      ? <Stack className="displayAlert" justifyContent="center" alignItems="center">
-          <Alert variant="filled" severity="success">
+      ? <Stack justifyContent="center" alignItems="center">
+          <Alert sx={{'& .MuiAlert-message': {overflow: 'hidden'} }} variant="filled" severity="success">
             <AlertTitle>Correct</AlertTitle>
-            <p className='displayAlertText'>Your Choice: <strong>{choice}</strong></p><br></br>
-            <p className='displayAlertText'>Correct Answer: <strong>{image.answer}</strong></p>
+            <p className='display-alert-text'>Your Choice: <strong>{choice}</strong></p><br></br>
+            <p className='display-alert-text'>Correct Answer: <strong>{image.answer}</strong></p>
           </Alert>
         </Stack>
-      : <Stack className="displayAlert" justifyContent="center" alignItems="center">
-          <Alert variant="filled" severity="error">
+      : <Stack justifyContent="center" alignItems="center">
+          <Alert sx={{'& .MuiAlert-message': {overflow: 'hidden'} }} variant="filled" severity="error">
             <AlertTitle>Incorrect</AlertTitle>
-            <p className='displayAlertText'>Your Choice: <strong>{choice}</strong></p><br></br>
-            <p className='displayAlertText'>Correct Answer: <strong>{image.answer}</strong></p>
+            <p className='display-alert-text'>Your Choice: <strong>{choice}</strong></p><br></br>
+            <p className='display-alert-text'>Correct Answer: <strong>{image.answer}</strong></p>
           </Alert>        
         </Stack>
   }
 
   return (
     <div>
-      <div className="mountImageParent">
-        <img className='mountImage' src={image.image}></img>
-        <div className='display'>
+      <div className="mount-image-parent">
+        <img alt="current mount" className='mount-image' src={image.image}></img>
+        <div className='display-result'>
           {Display}
         </div>
       </div>
       
-      <Stack direction="row" justifyContent="center" alignItems="center" spacing={2}>
+      <Stack className="button-stack" direction="row" justifyContent="center" alignItems="center" spacing={2}>
         {image.names.map((item) => 
           <Button 
             disabled={!!choice} 
             variant="outlined" 
-            color="secondary" 
             onClick={() => evaluate(item)}
           > 
           {item} 
